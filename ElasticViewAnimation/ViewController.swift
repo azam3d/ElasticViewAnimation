@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  ElasticViewAnimation
-//
-//  Created by Muhammad Azam Bin Baderi on 3/14/17.
-//  Copyright © 2017 Muhammad Azam Bin Baderi. All rights reserved.
-//
 
 import UIKit
 
@@ -72,14 +65,14 @@ class ViewController: UIViewController {
         updateShapeLayer()
         
         displayLink = CADisplayLink(target: self, selector: #selector(ViewController.updateShapeLayer))
-        displayLink.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
+        displayLink.add(to: RunLoop.main, forMode: RunLoop.Mode.default)
         displayLink.isPaused = true
     }
     
     // MARK: -
     // MARK: Methods
     
-    @objc fileprivate func panGestureDidMove(gesture: UIPanGestureRecognizer) {
+    @objc private func panGestureDidMove(gesture: UIPanGestureRecognizer) {
         if gesture.state == .ended || gesture.state == .failed || gesture.state == .cancelled {
             let centerY = minimalHeight
             
@@ -106,7 +99,7 @@ class ViewController: UIViewController {
         }
     }
     
-    fileprivate func layoutControlPoints(baseHeight: CGFloat, waveHeight: CGFloat, locationX: CGFloat) {
+    private func layoutControlPoints(baseHeight: CGFloat, waveHeight: CGFloat, locationX: CGFloat) {
         let width = view.bounds.width
         let minLeftX = min((locationX - width / 2.0) * 0.28, 0.0) // this value can go less than zero
         let maxRightX = max(width + (locationX - width / 2.0) * 0.28, width)
@@ -123,11 +116,11 @@ class ViewController: UIViewController {
         r3ControlPointView.center = CGPoint(x: maxRightX, y: baseHeight)
     }
     
-    func updateShapeLayer() {
+    @objc private func updateShapeLayer() {
         shapeLayer.path = currentPath()
     }
     
-    fileprivate func currentPath() -> CGPath {
+    private func currentPath() -> CGPath {
         let width = view.bounds.width
         let bezierPath = UIBezierPath()
         
